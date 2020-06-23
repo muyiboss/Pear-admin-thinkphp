@@ -6,6 +6,8 @@ namespace app;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
+use think\exception\HttpResponseException;
+use think\Response;
 
 /**
  * 控制器基础类
@@ -90,5 +92,35 @@ abstract class BaseController
 
         return $v->failException(true)->check($data);
     }
+
+    /**
+     * 返回API
+     * @access protected
+     * @param  string  $msg    提示信息
+     * @param  integer $code   状态码
+     * @param  array   $data   对应数据
+     * @param  array   $extend 扩展字段
+     * @param  array   $header HTTP头信息
+     * @return void
+     * @throws HttpResponseException
+     */
+    function returnApi($msg = '', $code = 1, $data = [], $extend = [], $header = [])
+    {
+        $return = [
+            'msg'  => $msg,
+            'code' => $code,
+        ];
+        if (!empty($data)) {
+            $return['data'] = $data;
+        }
+        if (!empty($extend)) {
+            foreach ($extend as $k => $v) {
+                $return[$k] = $v;
+            }
+        }
+        $response = Response::create($return, 'json')->header($header);
+        throw new HttpResponseException($response);
+    }
+
 
 }
