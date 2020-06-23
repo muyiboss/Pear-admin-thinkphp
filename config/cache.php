@@ -24,6 +24,22 @@ return [
             // 序列化机制 例如 ['serialize', 'unserialize']
             'serialize'  => [],
         ],
+        'redis' => [
+            // 驱动方式
+            'type'       => 'redis',
+            // 缓存有效期 0表示永久缓存
+            'expire'     => 0,
+            // 序列化机制 例如 ['serialize', 'unserialize']
+            'serialize'  => [],
+            // 缓存前缀
+            'prefix'     => Env::get('redis.prefix', ''),
+            // 主机
+            'host'       => Env::get('redis.host', '127.0.0.1'),
+            // 端口
+            'port'       => Env::get('redis.port', 6379),
+            // 密码
+            'password'   => Env::get('redis.password', ''),
+        ],
         // 更多的缓存连接
     ],
 ];
