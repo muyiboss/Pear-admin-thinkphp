@@ -32,13 +32,13 @@ return [
             // 序列化机制 例如 ['serialize', 'unserialize']
             'serialize'  => [],
             // 缓存前缀
-            'prefix'     => Env::get('redis.prefix', ''),
+            'prefix'     => '',
             // 主机
-            'host'       => Env::get('redis.host', '127.0.0.1'),
+            'host'       => '127.0.0.1',
             // 端口
-            'port'       => Env::get('redis.port', 6379),
+            'port'       => 6379,
             // 密码
-            'password'   => Env::get('redis.password', ''),
+            'password'   => '',
         ],
         // 更多的缓存连接
     ],
