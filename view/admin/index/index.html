@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearTab.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearTheme.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearLoad.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearFrame.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearAdmin.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearNotice.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearMenu.css" />
+		<link rel="stylesheet" href="__ADMIN__/css/pearCommon.css"/>
+		<style id="pearone-bg-color"></style>
+	</head>
+	<body class="layui-layout-body pear-admin">
+		<!-- 布局框架 -->
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<ul class="layui-nav layui-layout-left">
+					<li class="collaspe layui-nav-item layui-hide-xs"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
+					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1"></a></li>
+				</ul>
+				<div id="control" class="layui-layout-control"></div>
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
+					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>
+					<li class="layui-nav-item" lay-unselect="">
+						<a href="javascript:;"><img src="__ADMIN__/images/avatar.jpg" class="layui-nav-img">{:session('key.nickname')}</a>
+						<dl class="layui-nav-child">
+							<dd><a href="{:url('/cache')}">清理缓存</a></dd>
+							<dd><a href="{:url('/logout')}">注销登陆</a></dd>
+						</dl>
+					</li>
+					<li class="setting layui-nav-item"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>
+				</ul>
+			</div>
+			<div class="layui-side layui-bg-black">
+				<div class="layui-logo">
+					<img class="logo" src="__ADMIN__/images/logo.png" />
+					<span class="title">Pear Admin</span>
+				</div>
+				<div class="layui-side-scroll">
+					<div id="sideMenu"></div>
+				</div>
+			</div>
+			<div class="layui-body">
+				<div id="content"></div>
+			</div>
+		</div>
+
+		<!-- 移动端 遮盖层 -->
+		<div class="pear-cover"></div>
+
+
+		<!-- 移动端 的 收缩适配 -->
+		<div class="collaspe pe-collaspe layui-hide-sm">
+			<i class="layui-icon layui-icon-shrink-right"></i>
+		</div>
+		<script src="__ADMIN__/layui/layui.js"></script>
+		<script>
+			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer'], function() {
+				var pearAdmin = layui.pearAdmin;
+				var $ = layui.jquery;
+				var layer = layui.layer;
+
+				var config = {
+					muiltTab: true, // 是 否 开 启 多 标 签 页 true 开启 false 关闭
+					control: false, // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
+					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
+					index: '/main', // 默 认 加 载 主 页
+					data: '/menu', // 菜 单 数 据 加 载 地 址
+					select: '0',                 // 默 认 选 中 菜 单 项
+				};
+
+				pearAdmin.render(config);
+				{if (session('success'))}
+					layer.msg("{:session('success')}",{ icon:1 });
+				{/if}
+				{if (session('error'))}
+					layer.msg("{:session('error')}",{ icon:1 });
+				{/if}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="__ADMIN__/layui/css/layui.css" rel="stylesheet" />
+		<link href="__ADMIN__/css/pearCommon.css" rel="stylesheet" />
+	</head>
+	<body class="pear-container">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label">用户名</label>
+						<div class="layui-input-inline">
+							<input type="text" name="username" placeholder="" class="layui-input">
+						</div>
+						<button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+							<i class="layui-icon layui-icon-search"></i>
+							查询
+						</button>
+						<button type="reset" class="pear-btn pear-btn-md">
+							<i class="layui-icon layui-icon-refresh"></i>
+							重置
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="dataTable" lay-filter="dataTable"></table>
+			</div>
+		</div>
+		
+		<script src="__ADMIN__/layui/layui.js"></script>
+		<script>
+		   layui.use(['jquery', 'table', 'element', 'form', 'layer'], function () {
+			var table = layui.table;
+			var $ = layui.jquery;
+			var element = layui.element;
+			var form = layui.form;
+			var layer = layui.layer;
+
+			//表格初始化
+			var dataTable = table.render({
+				elem: '#dataTable'
+				, url: "log" //数据接口
+				, where: {model: "admin"}
+				, page: true //开启分页
+				, skin: 'line'
+				, toolbar: '#lay-toolbar'
+				, cols: [[ //表头
+					{checkbox: true}
+					, {field: 'id', title: 'ID', sort: true, width: 80}
+					, {field: 'username', title: '用户名'}
+					, {field: 'ip', title: 'ip地址'}
+					, {field: 'user_agent', title: 'user_agent'}
+					, {field: 'remark', title: '备注'}
+					, {field: 'create_time', title: '创建时间'}
+				]]
+				, defaultToolbar: [{
+						layEvent: 'refresh',
+						icon: 'layui-icon-refresh',
+					}, 'filter', 'print', 'exports']
+			});
+			table.on('toolbar(dataTable)', function(obj){
+					if(obj.event === 'refresh'){
+							refresh();
+					}
+			});
+			form.on('submit(query)', function(data){
+		            table.reload('dataTable',{where:data.field})
+		            return false;
+			});
+			refresh = function(param){
+				table.reload('dataTable');
+			}
+		})
+		</script>
+	</body>
+</html>

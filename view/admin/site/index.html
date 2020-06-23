@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__ADMIN__/css/pearForm.css" />
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" />
+    <style>
+       body{margin: 10px;background-color: whitesmoke;}
+    </style>
+</head>
+<body>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-header">网站设置</div>
+            <div class="layui-card-body">
+                <form class="layui-form" action="" lay-filter="component-form-element">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            网站标题
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" name="title" value="{$data['title']??''}" type="text"/>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            网站关键词
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input"  name="key" value="{$data['key']??''}" type="text"/>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            网站描述
+                        </label>
+                        <div class="layui-input-block">
+                            <textarea name="desc" class="layui-textarea">{$data['desc']??''}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">保存设置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__ADMIN__/layui/layui.js"></script>
+<script>
+ layui.use(['jquery','form','layer'],function () {
+        var $=layui.jquery;
+        var form=layui.form;
+        var layer=layui.layer;
+
+        form.on('submit(save)',function (data) {
+            var load = layer.load();
+            $.post("/site/index",data.field,function (res) {
+                layer.close(load);
+                if (res.code==1){
+                    layer.msg(res.msg,{icon:1,time:1500},function () {
+                    })
+                } else {
+                    layer.msg(res.msg,{icon:2,time:1500})
+                }
+            });
+            return false
+        })
+
+    })
+</script>
+</body>
+</html>
