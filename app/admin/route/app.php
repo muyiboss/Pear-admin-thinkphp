@@ -62,4 +62,7 @@ Route::group('/', function(){
     // | 系统管理
     // +----------------------------------------------------------------------
     Route::rule('site/index','site/index','GET|POST');//列表
+    Route::get('site/upload','site/upload');//文件管理
+    Route::post("site/uploadDel",'site/uploadDel');//删除
+    Route::rule("site/uploadAdd",'site/uploadAdd');//新增
 })->middleware(['AdminAuth','AdminPermission']);

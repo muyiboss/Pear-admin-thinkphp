@@ -171,10 +171,14 @@
             elem: '#logo' //绑定元素
             ,url: '/uploads' //上传接口
             ,done: function(res, index, upload){
-                var item = this.item;
-                var getId=item.context.id;
-                $('#up_img'+getId).attr('src',res.data);
-                $('#up_img_url'+getId).val(res.data);
+                if(res.code==1){
+                    var item = this.item;
+                    var getId=item.context.id;
+                    $('#up_img'+getId).attr('src',res.data);
+                    $('#up_img_url'+getId).val(res.data);  
+                }else{
+                    layer.msg(res.msg,{icon:2,time:1500})
+                }
             }
         });
 

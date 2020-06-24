@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__ADMIN__/css/pearForm.css" />
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" />
+    <style>
+       body{margin: 10px;background-color: whitesmoke;}
+    </style>
+</head>
+<body>
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+    <div class="layui-card">
+        <div class="layui-tab-content">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>新增图片</legend>
+              </fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        图片
+                    </label>
+                    <button type="button" class="layui-btn" id="file">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                </div>
+            </div>
+        </div>      
+    </div>
+</div>
+<script src="__ADMIN__/layui/layui.js"></script>
+<script>
+ layui.use(['jquery','layer','upload','closeTools'],function () {
+        var $=layui.jquery;
+        var layer=layui.layer;
+        var upload = layui.upload;
+        var closeTools = layui.closeTools;
+        
+       upload.render({
+            elem: '#file' //绑定元素
+            ,url: '/uploads' //上传接口
+            ,done: function(res, index, upload){
+                if(res.code==1){
+                    closeTools.layer_iframe_close(333, true);
+                }else{
+                    layer.msg(res.msg,{icon:2,time:1500})
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

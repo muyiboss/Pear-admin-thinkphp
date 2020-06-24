@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-06-24 11:27:10
+-- 生成日期： 2020-06-24 15:36:23
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -62,6 +62,13 @@ CREATE TABLE `admin_log` (
   `remark` char(50) NOT NULL COMMENT '备注信息',
   `create_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录日志表';
+
+--
+-- 转存表中的数据 `admin_log`
+--
+
+INSERT INTO `admin_log` (`id`, `username`, `ip`, `user_agent`, `remark`, `create_time`) VALUES
+(1, 'admin', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36', '登录成功', '2020-06-24 04:16:41');
 
 -- --------------------------------------------------------
 
@@ -159,7 +166,8 @@ INSERT INTO `permission` (`id`, `pid`, `title`, `href`, `icon`, `type`, `sort`) 
 (17, 0, '系统管理', '/', 'layui-icon layui-icon-set', 0, 99),
 (18, 17, '网站管理', '/site/index', '', 1, 99),
 (19, 0, '项目管理', '/', 'layui-icon layui-icon-app', 0, 99),
-(31, 1, '管理日志', '/admin/log', '', 1, 4);
+(31, 1, '管理日志', '/admin/log', '', 1, 4),
+(32, 17, '文件管理', '/site/upload', '', 1, 99);
 
 -- --------------------------------------------------------
 
@@ -240,12 +248,29 @@ INSERT INTO `site` (`id`, `name`, `value`) VALUES
 (5, 'smtp-pass', ''),
 (6, 'smtp-port', '465'),
 (7, 'smtp-host', 'smtp.qq.com'),
-(8, 'file-type', '2'),
-(9, 'file-endpoint', ''),
-(10, 'file-OssName', ''),
-(11, 'file-accessKeyId', ''),
-(12, 'file-accessKeySecret', ''),
+(8, 'file-type', '1'),
+(9, 'file-endpoint', 'img.jianla.cn'),
+(10, 'file-OssName', 'jianla-img'),
+(11, 'file-accessKeyId', '123123'),
+(12, 'file-accessKeySecret', 'asdfasdfasdfsadfasdf'),
 (13, 'logo', '');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `upload_file`
+--
+
+CREATE TABLE `upload_file` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `name` char(50) NOT NULL COMMENT '文件名称',
+  `href` varchar(255) DEFAULT NULL COMMENT '文件路径',
+  `mime` char(50) NOT NULL COMMENT 'mime类型',
+  `size` char(30) NOT NULL COMMENT '大小',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1本地2阿里云',
+  `ext` char(10) DEFAULT NULL COMMENT '文件后缀',
+  `create_time` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件表';
 
 --
 -- 转储表的索引
@@ -302,6 +327,12 @@ ALTER TABLE `site`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 表的索引 `upload_file`
+--
+ALTER TABLE `upload_file`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 在导出的表使用AUTO_INCREMENT
 --
 
@@ -315,7 +346,7 @@ ALTER TABLE `admin`
 -- 使用表AUTO_INCREMENT `admin_log`
 --
 ALTER TABLE `admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 使用表AUTO_INCREMENT `admin_permission`
@@ -333,7 +364,7 @@ ALTER TABLE `admin_role`
 -- 使用表AUTO_INCREMENT `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- 使用表AUTO_INCREMENT `role`
@@ -352,6 +383,12 @@ ALTER TABLE `role_permission`
 --
 ALTER TABLE `site`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- 使用表AUTO_INCREMENT `upload_file`
+--
+ALTER TABLE `upload_file`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

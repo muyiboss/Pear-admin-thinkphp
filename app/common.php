@@ -21,7 +21,27 @@ function alYunOSS($filePath,$Extension){
         $rel = $ossClient->uploadFile($bucket, $object, $filePath);
             return  ['code' => 1,'src' => $rel["info"]["url"]];
     } catch(OssException $e) {
-            return ['code' => 0,'src' => $e->getMessage()];
+            return $e->getMessage();
+    }
+}
+
+ 
+/**
+ *删除oss
+ */
+function alYunDel($path)
+{
+    $data = Db::name('site')->column('value', 'name');
+    $accessKeyId =  $data['file-accessKeyId']; 
+    $accessKeySecret = $data['file-accessKeySecret']; 
+    $endpoint = $data['file-endpoint'];
+    $bucket= $data['file-OssName'];  
+    try{
+        $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint,true);
+        $ossClient->deleteObject($bucket, $path);
+        return true;
+    }catch (OssException $e){
+        return $e->getMessage();
     }
 }
 

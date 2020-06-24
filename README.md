@@ -1,11 +1,11 @@
-后端基于thinkphp6，前端后台Pear Admin Layui。开发的后台管理系统
+#### 简介
 
+后端基于thinkphp6，前端后台Pear Admin Layui。开发的后台管理系统
 
 演示地址http://demo.jianla.cn/ 
 账号admin 密码123456 为方便体验，请大神留手 
 
-
-> 安装
+#### 安装
 
 * git clone https://gitee.com/Jmysy/Pear-Admin-Layui.git
 * compuser update
@@ -15,71 +15,30 @@
 * 开启redis
 
 
+#### 完成项目
 
-> 完成项目
-
-* RABC权限 完成
-* OSS上传  完成
-* 邮件发送 完成
-
+* RABC权限    完成
+* OSS上传     完成
+* 邮件发送    完成
+* 文件管理    完成
 
 
+#### 项目截图
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0611/081854_9d8e619f_4835367.jpeg "1591834182(1).jpg")
+
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0611/081905_b7ab38ea_4835367.jpeg "1591834203(1).jpg")
+
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0611/081915_d433156a_4835367.jpeg "1591834304(1).jpg")
+
+### 基于 Pear Admin Layui 的项目应用
+
+Pear-Admin-Boot : [开源地址](https://gitee.com/Jmysy/Pear-Admin-Boot) :+1: 
 
 >特别感谢
 
 ThinkPHP：https://github.com/top-think/framework
 
 Pear-Admin-Layui:https://gitee.com/Jmysy/Pear-Admin-Layui
-
-ThinkPHP 6.0
-===============
-
-> 运行环境要求PHP7.1+。
-
-## 主要新特性
-
-* 采用`PHP7`强类型（严格模式）
-* 支持更多的`PSR`规范
-* 原生多应用支持
-* 更强大和易用的查询
-* 全新的事件系统
-* 模型事件和数据库事件统一纳入事件系统
-* 模板引擎分离出核心
-* 内部功能中间件化
-* SESSION/Cookie机制改进
-* 对Swoole以及协程支持改进
-* 对IDE更加友好
-* 统一和精简大量用法
-
-## 安装
-
-~~~
-composer create-project topthink/think tp 6.0.*
-~~~
-
-如果需要更新框架使用
-~~~
-composer update topthink/framework
-~~~
-
-## 文档
-
-[完全开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
-
-## 参与开发
-
-请参阅 [ThinkPHP 核心框架包](https://github.com/top-think/framework)。
-
-## 版权信息
-
-ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
-
-本项目包含的第三方源码和二进制文件之版权信息另行标注。
-
-版权所有Copyright © 2006-2020 by ThinkPHP (http://thinkphp.cn)
-
-All rights reserved。
-
-ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
-
-更多细节参阅 [LICENSE.txt](LICENSE.txt)
