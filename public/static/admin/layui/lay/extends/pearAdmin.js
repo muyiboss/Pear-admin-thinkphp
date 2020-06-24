@@ -93,7 +93,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				if (option.muiltTab) {
 					var hashurl = location.hash.replace(/^#/, '');
 					var hashId = 0;
-			        if(hashurl=='/main' || hashId==''){
+			        if(hashurl=='/main' || hashurl==''){
 						var hashId = 1;
 						var hashurl ='/main';
 					}
