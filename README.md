@@ -8,7 +8,7 @@
 #### 安装
 
 * git clone https://gitee.com/Jmysy/Pear-Admin-Layui.git
-* compuser update
+* composer update
 * cp .example.env .env
 * 导入数据库
 * 修改配置信息
