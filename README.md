@@ -1,5 +1,3 @@
-
-Pear Admin Thinkphp
 ============================================================
 后端基于thinkphp6，前端后台Pear Admin Layui。开发的后台管理系统
 ============================================================
@@ -8,6 +6,7 @@ Pear Admin Thinkphp
 
 
 > 安装
+
 * git clone https://gitee.com/Jmysy/Pear-Admin-Layui.git
 * compuser update
 * cp .example.env .env
@@ -16,8 +15,13 @@ Pear Admin Thinkphp
 * 开启redis
 
 
+
+> 完成项目
+
 * RABC权限 完成
 * OSS上传  完成
+* 邮件发送 完成
+
 
 
 
