@@ -28,8 +28,14 @@
 </div>
 <div class="layui-form-item">
     <label for="" class="layui-form-label">图标</label>
-    <div class="layui-input-block">
-        <input type="text" class="layui-input"  name="icon" value="{$model->icon??''}" placeholder="请输入图标">
+    <div class="layui-input-inline">
+        <input class="layui-input" type="hidden" name="icon" >
+    </div>
+    <div class="layui-form-mid layui-word-aux" id="icon_box">
+        <i class="layui-icon {$model->icon??''}"></i>
+    </div>
+    <div class="layui-form-mid layui-word-aux">
+        <button type="button" class="layui-btn layui-btn-xs" onclick="showIconsBox()">选择图标</button>
     </div>
 </div>
 <div class="layui-form-item">

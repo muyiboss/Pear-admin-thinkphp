@@ -91,7 +91,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			this.bodyRender = function(option) {
 
 				if (option.muiltTab) {
-
+					var hashurl = location.hash.replace(/^#/, '');
+					var hashId = 0;
+			        if(hashurl=='/main' || hashId==''){
+						var hashId = 1;
+						var hashurl ='/main';
+					}
 					bodyTab = pearTab.render({
 						elem: 'content',
 						roll: true,
@@ -101,10 +106,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 						index: 0,
 						tabMax: 20,
 						data: [{
-							id: '0',
-							url: option.index,
-							title: '首页',
-							close: false
+							id: hashId,
+							url: hashurl,
+							title: 	$('[menu-url="' + hashurl + '"]').text(),
+							close: true
 						}] //初始化数据
 					});
 

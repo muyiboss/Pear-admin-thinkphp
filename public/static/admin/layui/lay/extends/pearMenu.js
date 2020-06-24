@@ -74,6 +74,8 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				menuUrl: dom.attr("menu-url")
 			};
 
+			location.hash = data.menuUrl;
+			
 			var doms = hash(dom);
 
 			if (doms.text() != '') {
@@ -159,7 +161,12 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("dd").addClass("layui-nav-itemed");
 
 		}
-
+		// 通 过 地 址 打 开
+		var hashurl = location.hash.replace(/^#/, '');
+		if (hashurl) {
+			$('[menu-url="' + hashurl + '"]').parent().addClass("layui-this");
+			$('[menu-url="' + hashurl + '"]').parent().parents('li').addClass("layui-nav-itemed");
+		}
 		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parent().addClass("layui-this");
 
 

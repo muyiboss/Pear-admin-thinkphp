@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-06-24 15:36:23
+-- 生成日期： 2020-06-24 19:29:03
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -44,9 +44,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `nickname`, `salt`, `status`, `create_time`, `update_time`) VALUES
-(1, 'admin', '04f2ee7178b2cee169247b499794d092', '超级管理员', 'LEYYSqqpsOYOeiOH', 1, '2020-02-27 11:26:23', '2020-06-24 03:22:37'),
-(30, '123', '9761d3a519ae9722d8440981c1e12c90', '123', 'mQbwE8QAQEl00SEE', 1, '2020-06-23 13:21:08', '2020-06-23 14:51:38'),
-(31, '333', 'a3c238873e17bd5e40a7466f1ad391a5', '33', 'JatxXxto7x6Zr8DN', 1, '2020-06-23 13:21:31', '2020-06-24 00:15:34');
+(1, 'admin', '04f2ee7178b2cee169247b499794d092', '超级管理员', 'LEYYSqqpsOYOeiOH', 1, '2020-02-27 11:26:23', '2020-06-24 03:22:37');
 
 -- --------------------------------------------------------
 
@@ -68,7 +66,7 @@ CREATE TABLE `admin_log` (
 --
 
 INSERT INTO `admin_log` (`id`, `username`, `ip`, `user_agent`, `remark`, `create_time`) VALUES
-(1, 'admin', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36', '登录成功', '2020-06-24 04:16:41');
+(1, 'admin', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36', '登录成功', '2020-06-24 11:28:28');
 
 -- --------------------------------------------------------
 
@@ -82,29 +80,6 @@ CREATE TABLE `admin_permission` (
   `permission_id` int(11) NOT NULL COMMENT '权限ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-权限中间表';
 
---
--- 转存表中的数据 `admin_permission`
---
-
-INSERT INTO `admin_permission` (`id`, `admin_id`, `permission_id`) VALUES
-(17, 31, 1),
-(18, 31, 2),
-(19, 31, 3),
-(20, 31, 4),
-(21, 31, 5),
-(22, 31, 6),
-(23, 31, 7),
-(24, 31, 8),
-(25, 31, 9),
-(26, 31, 10),
-(27, 31, 11),
-(28, 31, 12),
-(29, 31, 13),
-(30, 31, 14),
-(31, 31, 15),
-(32, 31, 16),
-(33, 31, 31);
-
 -- --------------------------------------------------------
 
 --
@@ -116,15 +91,6 @@ CREATE TABLE `admin_role` (
   `admin_id` int(11) NOT NULL COMMENT '管理ID',
   `role_id` int(11) NOT NULL COMMENT '角色ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理-角色中间表';
-
---
--- 转存表中的数据 `admin_role`
---
-
-INSERT INTO `admin_role` (`id`, `admin_id`, `role_id`) VALUES
-(1, 25, 2),
-(2, 25, 2),
-(4, 30, 1);
 
 -- --------------------------------------------------------
 
@@ -147,27 +113,28 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`id`, `pid`, `title`, `href`, `icon`, `type`, `sort`) VALUES
-(1, 0, '后台管理', '/', 'layui-icon layui-icon-username', 0, 99),
-(2, 1, '管理员', '/admin/index', '', 1, 1),
-(3, 2, '添加', '/admin/add', '', 1, 99),
-(4, 2, '编辑', '/admin/edit', '', 3, 99),
-(5, 2, '删除', '/admin/del', '', 4, 99),
-(6, 2, '分配角色', '/admin/role', '', 1, 99),
-(7, 2, '分配权限', '/admin/permission', '', 1, 99),
-(8, 1, '角色管理', '/role/index', '', 1, 2),
-(9, 8, '添加', '/role/add', '', 1, 99),
-(10, 8, '编辑', '/role/edit', '', 1, 99),
-(11, 8, '删除', '/role/del', '', 1, 99),
-(12, 8, '分配权限', '/role/permission', '', 1, 99),
-(13, 1, '权限管理', '/permission/index', '', 1, 3),
-(14, 13, '添加', '/permission/add', '', 2, 99),
-(15, 13, '编辑', '/permission/edit', '', 3, 99),
-(16, 13, '删除', '/permission/del', '', 4, 99),
-(17, 0, '系统管理', '/', 'layui-icon layui-icon-set', 0, 99),
-(18, 17, '网站管理', '/site/index', '', 1, 99),
-(19, 0, '项目管理', '/', 'layui-icon layui-icon-app', 0, 99),
-(31, 1, '管理日志', '/admin/log', '', 1, 4),
-(32, 17, '文件管理', '/site/upload', '', 1, 99);
+(1, 0, '首页', '/main', 'layui-icon layui-icon-home', 1, 1),
+(2, 0, '后台管理', '/', 'layui-icon layui-icon-username', 0, 99),
+(3, 2, '管理员', '/admin/index', '', 1, 1),
+(4, 3, '添加', '/admin/add', '', 1, 99),
+(5, 3, '编辑', '/admin/edit', '', 3, 99),
+(6, 3, '删除', '/admin/del', '', 4, 99),
+(7, 3, '分配角色', '/admin/role', '', 1, 99),
+(8, 3, '分配权限', '/admin/permission', '', 1, 99),
+(9, 2, '角色管理', '/role/index', '', 1, 2),
+(10, 9, '添加', '/role/add', '', 1, 99),
+(11, 9, '编辑', '/role/edit', '', 1, 99),
+(12, 9, '删除', '/role/del', '', 1, 99),
+(13, 9, '分配权限', '/role/permission', '', 1, 99),
+(14, 2, '权限管理', '/permission/index', '', 1, 3),
+(15, 14, '添加', '/permission/add', '', 2, 99),
+(16, 14, '编辑', '/permission/edit', '', 3, 99),
+(17, 14, '删除', '/permission/del', '', 4, 99),
+(18, 0, '系统管理', '/', 'layui-icon layui-icon-set', 0, 99),
+(19, 18, '网站管理', '/site/index', '', 1, 99),
+(20, 0, '项目管理', '/', 'layui-icon layui-icon-water', 0, 99),
+(21, 2, '管理日志', '/admin/log', '', 1, 4),
+(22, 18, '文件管理', '/site/upload', '', 1, 99);
 
 -- --------------------------------------------------------
 
@@ -188,7 +155,8 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `name`, `desc`, `create_time`, `update_time`) VALUES
-(1, '超级管理员', '用于所有管理权限!', '2020-02-28 06:00:39', '2020-02-28 06:00:50');
+(1, '超级管理员', '用于所有管理权限!', '2020-02-28 06:00:39', '2020-02-28 06:00:50'),
+(2, '123', '123', '2020-06-24 08:46:24', '2020-06-24 08:46:24');
 
 -- --------------------------------------------------------
 
@@ -201,28 +169,6 @@ CREATE TABLE `role_permission` (
   `permission_id` int(11) NOT NULL COMMENT '权限ID',
   `role_id` int(11) NOT NULL COMMENT '角色ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色-权限中间表';
-
---
--- 转存表中的数据 `role_permission`
---
-
-INSERT INTO `role_permission` (`id`, `permission_id`, `role_id`) VALUES
-(33, 1, 1),
-(34, 2, 1),
-(35, 3, 1),
-(36, 4, 1),
-(37, 5, 1),
-(38, 6, 1),
-(39, 7, 1),
-(40, 8, 1),
-(41, 9, 1),
-(42, 10, 1),
-(43, 11, 1),
-(44, 12, 1),
-(45, 13, 1),
-(46, 14, 1),
-(47, 15, 1),
-(48, 16, 1);
 
 -- --------------------------------------------------------
 
@@ -340,7 +286,7 @@ ALTER TABLE `upload_file`
 -- 使用表AUTO_INCREMENT `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 使用表AUTO_INCREMENT `admin_log`
@@ -352,13 +298,13 @@ ALTER TABLE `admin_log`
 -- 使用表AUTO_INCREMENT `admin_permission`
 --
 ALTER TABLE `admin_permission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `admin_role`
 --
 ALTER TABLE `admin_role`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `permission`
@@ -370,13 +316,13 @@ ALTER TABLE `permission`
 -- 使用表AUTO_INCREMENT `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 使用表AUTO_INCREMENT `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `site`
@@ -388,7 +334,7 @@ ALTER TABLE `site`
 -- 使用表AUTO_INCREMENT `upload_file`
 --
 ALTER TABLE `upload_file`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

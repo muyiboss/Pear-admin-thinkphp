@@ -33,10 +33,6 @@
 			{{# } }}
 		</script>
 		
-		<script type="text/html" id="icon">
-			<i class="layui-icon {{d.icon}}"></i>
-		</script>
-		
 		<script src="__ADMIN__/layui/layui.js"></script>
 		<script>
 			layui.use(['table','form','jquery','treetable'],function () {
@@ -49,7 +45,7 @@
 		
 				window.render = function(){
 					treetable.render({
-						treeColIndex: 1,
+						treeColIndex: 0,
 						treeSpid: 0,
 						treeIdName: 'id',
 						treePidName: 'pid',
@@ -63,7 +59,11 @@
 						cols: [
 							[
 							{field: 'title', minWidth: 200, title: '权限名称'},
-							{field: 'icon', title: '图标',templet:'#icon'},
+							{field: 'icon',title: '图标', unresize: true, align: 'center',
+								templet:function (d) {
+									return '<i class=" '+d.icon+'"></i>';
+								}
+							}, 
 							{field: 'type', title: '权限类型',templet:'#power-type'},
 							{field: 'sort', title: '排序'},
 							{title: '操作',templet: '#power-bar', width: 150, align: 'center'}
