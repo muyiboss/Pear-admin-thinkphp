@@ -8,12 +8,18 @@ Pear Admin Thinkphp
 
 
 > 安装
-git clone https://gitee.com/Jmysy/Pear-Admin-Layui.git
-compuser update
-cp .example.env .env
-导入数据库
-修改配置信息
-开启redis
+* git clone https://gitee.com/Jmysy/Pear-Admin-Layui.git
+* compuser update
+* cp .example.env .env
+* 导入数据库
+* 修改配置信息
+* 开启redis
+
+
+* RABC权限 完成
+* OSS上传  完成
+
+
 
 >特别感谢
 

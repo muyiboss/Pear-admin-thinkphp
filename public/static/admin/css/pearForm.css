@@ -54,3 +54,11 @@
 	.layui-form-checkbox[lay-skin=primary] i{
 	    border-radius: 4px;
 	}
+	.layui-upload-img {
+		width: 92px;
+		height: 92px;
+		margin: 0 10px 10px 0;
+	}
+	.layui-upload-img[src=""],.layui-upload-img:not([src]){
+		display: none;
+    }

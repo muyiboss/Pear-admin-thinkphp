@@ -27,6 +27,7 @@ Route::group('/', function(){
     Route::get('main','index/main');//控制台
     Route::get('cache','index/cache');//清理缓存
     Route::get('logout','login/logout');//退出登录
+    Route::post('uploads','index/upload');//通用上传
 
     // +----------------------------------------------------------------------
     // | 管理员

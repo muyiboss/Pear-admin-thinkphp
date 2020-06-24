@@ -19,7 +19,7 @@ class AdminPermission
         $tag = false;
         foreach ($permissions as $permission) {
             //排除验证路由
-            $exp = ['','/main','/cache','/logout','/menu'];
+            $exp = ['','/main','/cache','/logout','/menu'.'/uploads'];
             if ($permission['href'] == $url || in_array($url,$exp)) {
                 $tag = true;
                 break;
