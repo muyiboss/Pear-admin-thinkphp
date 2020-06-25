@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__ADMIN__/css/pearCommon.css" />
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" />
+</head>
+<body>
+{include file="admin/form"}
+<script src="__ADMIN__/layui/layui.js"></script>
+<script>
+ layui.use(['jquery','form','layer','closeTools'],function () {
+        var $=layui.jquery;
+        var form=layui.form;
+        var layer=layui.layer;
+        var closeTools = layui.closeTools;
+
+        form.on('submit(save)',function (data) {
+            var load = layer.load();
+            $.post("/admin/add",data.field,function (res) {
+                layer.close(load);
+                if (res.code==1){
+                    layer.msg(res.msg,{icon:1,time:1500},function () {
+                        closeTools.layer_iframe_close(333, true);
+                    })
+                } else {
+                    layer.msg(res.msg,{icon:2,time:1500})
+                }
+            });
+            return false
+        })
+
+    })
+</script>
+</body>
+</html>

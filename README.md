@@ -1,8 +1,9 @@
 #### 简介
 
-后端基于thinkphp6，前端后台Pear Admin Layui。开发的后台管理系统
+后端基于thinkphp6.0.3，前端后台Pear Admin Layui。开发的后台管理系统
 
 演示地址http://demo.jianla.cn/ 
+账号admin 密码123456
 
 #### 安装
 
@@ -20,6 +21,7 @@
 * OSS上传     完成
 * 邮件发送    完成
 * 文件管理    完成
+
 
 
 ### 基于 Pear Admin Layui 的项目应用
