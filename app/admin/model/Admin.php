@@ -43,7 +43,6 @@ class Admin extends Model
         Session::set('sign', $this->dataSign($data));
         //缓存权限
         $permissions = $this->permissions($admin->id);
-        Session::set('menu', get_tree($permissions));
         Session::set('permission', $permissions);
         return true;
     }

@@ -7,6 +7,7 @@ use think\facade\View;
 use think\facade\Session;
 use think\facade\Db;
 use app\common\model\UploadFile;
+use app\admin\model\Admin;
 class Index extends Base
 {
     public function index(){
@@ -29,7 +30,10 @@ class Index extends Base
     }
 
     public function menu(){
-        return json(Session::get('menu'));
+        if(!Session::has('permission')){
+            Session::set('permission',(new Admin())->permissions(Session::get('key.id')));
+        }
+        return json(get_tree(Session::get('permission')));
     }
 
     public function upload()

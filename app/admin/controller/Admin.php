@@ -20,7 +20,7 @@ class Admin extends Base
             if ($search = input('get.username')) {
                $where[] = ['username', 'like', "%" . $search . "%"];
             }
-            $list = AdminModel::order('id','desc')->where($where)->paginate($this->request->get('limit'));
+            $list = AdminModel::order('id','desc')->withoutField('password,salt')->where($where)->paginate($this->request->get('limit'));
             $this->returnApi('', 0, $list->items(),['count' => $list->total(), 'limit' => $this->request->get('limit')]);
         }
         return View::fetch();
@@ -132,6 +132,7 @@ class Admin extends Base
             $data = $this->request->param('roles',[]);
             Db::startTrans();
             try{
+                event('PermissionRm');
                 //清除原先的角色
                 Db::name('admin_role')->where('admin_id',$id)->delete();
                 //添加新的角色
@@ -172,6 +173,7 @@ class Admin extends Base
             $data = $this->request->param('permissions',[]);
             Db::startTrans();
             try{
+                event('PermissionRm');
                 //清除原有的直接权限
                 Db::name('admin_permission')->where('admin_id',$id)->delete();
                 //填充新的直接权限

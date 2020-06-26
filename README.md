@@ -7,11 +7,17 @@
 
 #### 安装
 
-* git clone https://gitee.com/Jmysy/Pear-Admin-Layui.git
+* git clone https://gitee.com/muyiboss/Pear-Admin-Thinkphp.git
 * composer update
 * cp .example.env .env
 * 导入数据库
 * 修改配置信息
+config/app.php 路由绑定应用
+'domain_bind'      => [
+    'admin' => 'admin',//后台 如子域名admin.xxx.com 
+    'www' => 'index', //前台
+    '*' => 'index' //前台
+],
 * 开启redis
 
 

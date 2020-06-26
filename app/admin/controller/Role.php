@@ -70,6 +70,7 @@ class Role extends Base
         }
         Db::startTrans();
         try{
+            event('PermissionRm');
             Db::name('role_permission')->where('role_id',$role['id'])->delete();
             $role->delete();
             Db::commit();
@@ -99,6 +100,7 @@ class Role extends Base
             $data = $this->request->param('permissions',[]);
             Db::startTrans();
             try{
+                event('PermissionRm');
                 //清除角色的原有权限
                 Db::name('role_permission')->where('role_id',$id)->delete();
                 //添加角色权限

@@ -29,6 +29,7 @@ class Permission extends Base
                 $this->returnApi($validate->getError(),0);
             }
             try{
+                event('PermissionRm');
                 PermissionModel::create($data);
             }catch (\Exception $e){
                 $this->returnApi('新增失败',0);
@@ -52,6 +53,7 @@ class Permission extends Base
                 $this->returnApi($validate->getError(),0);
             }
             try{
+                event('PermissionRm');
                 $permission->save($data);
             }catch (\Exception $e){
                 $this->returnApi('修改失败',0);
@@ -77,6 +79,7 @@ class Permission extends Base
         //开启事务删除
         Db::startTrans();
         try{
+            event('PermissionRm');
             Db::name('role_permission')->where('permission_id',$id)->delete();
             Db::name('admin_permission')->where('permission_id',$id)->delete();
             Db::name('permission')->delete($id);
