@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 use think\facade\View;
 use think\facade\Session;
+use think\facade\Db;
 use app\common\model\UploadFile;
 class Index extends Base
 {
@@ -13,7 +14,18 @@ class Index extends Base
     }
 
     public function main(){
-        return View::fetch();
+        return View::fetch('',[
+            'os'=>PHP_OS,
+            'space'=>round((disk_free_space('.')/(1024*1024)),2).'M',
+            'addr'=>$this->request->server('SERVER_ADDR'),
+            'run'=> $this->request->server('SERVER_SOFTWARE'),
+            'php'=>PHP_VERSION,
+            'php_run'=> php_sapi_name(),
+            'mysql'=> function_exists('mysql_get_server_info')?mysql_get_server_info():Db::query('SELECT VERSION() as mysql_version')[0]['mysql_version'],
+            'think'=> $this->app->version(),
+            'upload'=>ini_get('upload_max_filesize'),
+            'max'=>ini_get('max_execution_time').'秒',
+        ]);
     }
 
     public function menu(){
