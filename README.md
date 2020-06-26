@@ -21,7 +21,8 @@
 * OSS上传     完成
 * 邮件发送    完成
 * 文件管理    完成
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0625/213749_dfcd4529_1302383.png "1.png")
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0626/192920_2a718f1e_1302383.png "11.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0625/213756_27cbdd83_1302383.png "2.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0625/213802_e118467d_1302383.png "3.png")
 
