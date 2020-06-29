@@ -1,7 +1,7 @@
 #### 简介
 
 后端基于thinkphp6.0.3，前端后台Pear Admin Layui。开发的后台管理系统
-
+2020/6/29 重大重塑  进一步优化系统逻辑
 演示地址http://demo.jianla.cn/ 
 账号admin 密码123456
 
@@ -26,6 +26,7 @@ config/app.php 路由绑定应用
 * RABC权限    完成
 * OSS上传     完成
 * 邮件发送    完成
+* 系统设置    完成
 * 文件管理    完成
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0626/192920_2a718f1e_1302383.png "11.png")

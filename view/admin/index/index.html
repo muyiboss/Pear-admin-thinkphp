@@ -24,14 +24,27 @@
 					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1"></a></li>
 				</ul>
 				<div id="control" class="layui-layout-control"></div>
-				<ul class="layui-nav layui-layout-right">
+				<ul class="layui-nav layui-layout-right" lay-filter="layui_nav_right">
 					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
 					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>
 					<li class="layui-nav-item" lay-unselect="">
 						<a href="javascript:;"><img src="__ADMIN__/images/avatar.jpg" class="layui-nav-img">{:session('key.nickname')}</a>
 						<dl class="layui-nav-child">
-							<dd><a href="{:url('/cache')}">清理缓存</a></dd>
-							<dd><a href="{:url('/logout')}">注销登陆</a></dd>
+							<dd>
+								<a href="javascript:void(0);" class="password">
+									修改密码
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:void(0);" class="cache">
+									清理缓存
+								</a>
+							</dd>
+							<dd>
+								<a href="javascript:void(0);" class="logout">
+									退出登录
+								</a>
+							</dd>
 						</dl>
 					</li>
 					<li class="setting layui-nav-item"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>
@@ -63,30 +76,9 @@
 		<div class="collaspe pe-collaspe layui-hide-sm">
 			<i class="layui-icon layui-icon-shrink-right"></i>
 		</div>
+		<script src="__ADMIN__/js/jquery.js"></script>
+		<script src="__ADMIN__/js/tool.js"></script>
 		<script src="__ADMIN__/layui/layui.js"></script>
-		<script>
-			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer'], function() {
-				var pearAdmin = layui.pearAdmin;
-				var $ = layui.jquery;
-				var layer = layui.layer;
-
-				var config = {
-					muiltTab: true, // 是 否 开 启 多 标 签 页 true 开启 false 关闭
-					control: false, // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
-					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
-					index: '/main', // 默 认 加 载 主 页
-					data: '/menu', // 菜 单 数 据 加 载 地 址
-					select: '0',                 // 默 认 选 中 菜 单 项
-				};
-
-				pearAdmin.render(config);
-				{if (session('success'))}
-					layer.msg("{:session('success')}",{ icon:1 });
-				{/if}
-				{if (session('error'))}
-					layer.msg("{:session('error')}",{ icon:1 });
-				{/if}
-			})
-		</script>
+		<script src="__ADMIN__/module/index/index.js"></script>
 	</body>
 </html>

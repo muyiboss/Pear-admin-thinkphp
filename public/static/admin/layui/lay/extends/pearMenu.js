@@ -75,7 +75,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			};
 
 			location.hash = data.menuUrl;
-			
+
 			var doms = hash(dom);
 
 			if (doms.text() != '') {
@@ -232,7 +232,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		// 开 启 同 步 操 作
 		$.each(option.data, function(i, item) {
 			// 创 建 每 一 个 菜 单 项
-
 
 			var content = '<li class="layui-nav-item" >';
 

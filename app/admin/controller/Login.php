@@ -9,23 +9,25 @@ use think\captcha\facade\Captcha;
 use app\admin\validate\Admin as AdminValidate;
 class Login extends Base
 {
-    public function index()
-    {
+    /**
+     * 后台登录
+     * @return \think\Response
+     */
+    public function index(){
         $admin = new Admin();
         //是否已经登录
         if ($admin->isLogin()){
             return redirect('/');
         }
-        if ($this->request->isAjax()){
+        if ($this->isAjax){
             //获取数据
-            $data = $this->request->post();
+            $data = $this->post;
             //验证
-            $validate = new AdminValidate;
-            if (!$validate->scene('login')->check($data)) {
-                $this->returnApi($validate->getError(),0);
-            }
+            $validate = new AdminValidate();
+            if(!$validate->scene('login')->check($data))  $this->returnApi($validate->getError(),0);
             //判断登录
-            if (true == $admin->login($data['username'],$data['password'])){
+            if(!isset($data['remember'])) $data['remember']=0;
+            if (true == $admin->login($data['username'],$data['password'],$data['remember'])){
                 $this->returnApi('登录成功');
             }
             $this->returnApi('用户名或密码错误',0);
@@ -34,11 +36,15 @@ class Login extends Base
     }
 
     public function verify(){
-        return Captcha::create(); 
+        return Captcha::create();   
     }
 
+     /**
+     * 退出登陆
+     * @return mixed
+     */
     public function logout(){
         (new Admin())->logout();
-        return redirect('/login')->with('success','成功退出');
+        $this->returnApi('退出成功',1,'/login/index');
     }
 }

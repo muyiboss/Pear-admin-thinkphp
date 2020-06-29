@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="__ADMIN__/css/pearForm.css" />
-    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" />
-    <style>
-       body{margin: 10px;background-color: whitesmoke;}
-    </style>
-</head>
-<body>
+{extend name="/base"}
+{block name="css"}
+   <link rel="stylesheet" href="__ADMIN__/css/pearForm.css" />
+   <style>
+   body{margin: 10px;background-color: whitesmoke;}
+   </style>
+{/block}
+{block name="body"}
 <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
         <div class="layui-card">
@@ -21,51 +17,29 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <form class="layui-form" action="" lay-filter="component-form-element">
+                    <form class="layui-form edit-form" action="" lay-filter="component-form-element">
                         <div class="layui-form-item">
                             <label class="layui-form-label">
-                                网站标题
+                                登录验证码
                             </label>
                             <div class="layui-input-block">
-                                <input autocomplete="off" class="layui-input" name="title" value="{$data['title']??''}" type="text"/>
+                                {if $data['login_captcha']}
+                                <input checked="" lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="checkbox" value="1"/>
+                                {else}
+                                <input lay-filter="login_captcha" lay-skin="switch" lay-text="开启|关闭" name="login_captcha" type="checkbox" value="0"/>
+                                {/if}
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">
-                                网站关键词
-                            </label>
                             <div class="layui-input-block">
-                                <input autocomplete="off" class="layui-input"  name="key" value="{$data['key']??''}" type="text"/>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">
-                                网站描述
-                            </label>
-                            <div class="layui-input-block">
-                                <textarea name="desc" class="layui-textarea">{$data['desc']??''}</textarea>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">
-                                网站LOGO
-                            </label>
-                            <button type="button" class="layui-btn" id="logo">
-                                <i class="layui-icon">&#xe67c;</i>上传图片
-                            </button>
-                            <img {if condition="$data['logo'] neq ''"} src="{$data['logo']}" {/if} class="layui-upload-img" id="up_imglogo">
-                            <input type="hidden" value="{$data['logo']??''}" name="logo" id="up_img_urllogo">
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">保存设置</button>
+                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="configform">保存设置</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="layui-tab-item">
-                    <form class="layui-form" action="" lay-filter="component-form-element">
-                        <div class="layui-form-item">
+                    <form class="layui-form edit-form" action="" lay-filter="component-form-element">
+                            <div class="layui-form-item">
                             <label class="layui-form-label">
                                 邮箱账号
                             </label>
@@ -99,13 +73,13 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">保存设置</button>
+                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="configform">保存设置</button>
                             </div>
                         </div>
                      </form>
                 </div>
                 <div class="layui-tab-item">
-                    <form class="layui-form" action="" lay-filter="component-form-element">
+                    <form class="layui-form edit-form" action="" lay-filter="component-form-element">
                         <div class="layui-form-item">
                             <label class="layui-form-label">存储方式</label>
                             <div class="layui-input-block">
@@ -141,7 +115,7 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">保存设置</button>
+                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="configform">保存设置</button>
                             </div>
                         </div>
                      </form>
@@ -151,57 +125,7 @@
         </div>
     </div>
 </div>
-<script src="__ADMIN__/layui/layui.js"></script>
-<script>
- layui.use(['jquery','form','layer','element','upload'],function () {
-        var $=layui.jquery;
-        var form=layui.form;
-        var layer=layui.layer;
-        var element = layui.element;
-        var upload = layui.upload;
-
-        form.on('radio(type)', function(data){
-            if(data.value==2){
-                $("#oss").show();
-            }else{
-				$("#oss").hide();
-            }
-        });  
-       upload.render({
-            elem: '#logo' //绑定元素
-            ,url: '/uploads' //上传接口
-            ,done: function(res, index, upload){
-                if(res.code==1){
-                    var item = this.item;
-                    var getId=item.context.id;
-                    $('#up_img'+getId).attr('src',res.data);
-                    $('#up_img_url'+getId).val(res.data);  
-                }else{
-                    layer.msg(res.msg,{icon:2,time:1500})
-                }
-            }
-        });
-
-        form.on('submit(save)',function (data) {
-            var load = layer.load();
-            $.post("/site/index",data.field,function (res) {
-                layer.close(load);
-                if (res.code==1){
-                    layer.msg(res.msg,{icon:1,time:1500},function () {
-                    })
-                } else {
-                    layer.msg(res.msg,{icon:2,time:1500})
-                }
-            });
-            return false
-        })
-        var layid = location.hash.replace(/^#TabBrief=/, '');
-        element.tabChange('TabBrief', layid); 
-        element.on('tab(TabBrief)', function(){
-            location.hash = 'TabBrief='+ this.getAttribute('lay-id');
-        });
-
-    })
-</script>
-</body>
-</html>
+{/block}
+{block name="js"}
+<script src="__ADMIN__/module/config/index.js"></script>
+{/block}

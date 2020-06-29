@@ -1,17 +1,19 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\common\model;
+namespace app\admin\model;
 
 use think\Model;
 
 /**
- * @mixin think\Model
+ * @mixin \think\Model
  */
-class UploadFile extends Model
+class ConfigFile extends Model
 {
-    protected $table = 'upload_file';
-
+    protected $table = 'system_file';
+    // 定义时间戳字段名
+    protected $createTime = 'create_at';
+    
     public function getTypeAttr($value)
     {
         $type = ['1' => '本地', '2' => '阿里云'];
@@ -30,5 +32,4 @@ class UploadFile extends Model
         ];
         self::create($data);
     }
-
 }

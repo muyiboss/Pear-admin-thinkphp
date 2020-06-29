@@ -1,37 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="__ADMIN__/css/pearCommon.css" />
-    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" />
-</head>
-<body>
-{include file="admin/form"}
-<script src="__ADMIN__/layui/layui.js"></script>
-<script>
- layui.use(['jquery','form','layer','closeTools'],function () {
-        var $=layui.jquery;
-        var form=layui.form;
-        var layer=layui.layer;
-        var closeTools = layui.closeTools;
-
-        form.on('submit(save)',function (data) {
-            var load = layer.load();
-            $.post("/admin/add",data.field,function (res) {
-                layer.close(load);
-                if (res.code==1){
-                    layer.msg(res.msg,{icon:1,time:1500},function () {
-                        closeTools.layer_iframe_close(333, true);
-                    })
-                } else {
-                    layer.msg(res.msg,{icon:2,time:1500})
-                }
-            });
-            return false
-        })
-
-    })
-</script>
-</body>
-</html>
+{extend name="/base"}
+{block name="body"}
+    <form class="layui-form  edit-form" action="" >
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="main-container">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" maxlength="16" name="username" value="{$model->username??''}" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">昵称</label>
+                        <div class="layui-input-block">
+                            <input type="text"  name="nickname" value="{$model->nickname??''}" placeholder="请输入昵称"  autocomplete="off"  class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="password"  placeholder="请输入密码" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="apiform">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+    {/block}

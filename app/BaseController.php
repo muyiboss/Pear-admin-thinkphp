@@ -25,7 +25,10 @@ abstract class BaseController
      * @var \think\App
      */
     protected $app;
-
+    protected $get;
+    protected $post;
+    protected $isAjax;
+    protected $isPost;
     /**
      * 是否批量验证
      * @var bool
@@ -54,8 +57,12 @@ abstract class BaseController
 
     // 初始化
     protected function initialize()
-    {}
-
+    {
+        $this->get   = $this->request->get();
+        $this->post  = $this->request->post();
+        $this->isAjax  = $this->request->isAjax();
+        $this->isPost  = $this->request->isPost();
+    }
     /**
      * 验证数据
      * @access protected

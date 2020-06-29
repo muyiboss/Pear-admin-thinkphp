@@ -48,6 +48,8 @@
 			jquery: "modules/jquery",
 			mobile: "modules/mobile",
 			dtree:"extends/dtree",
+			iconPicker:"extends/iconPicker",
+			pearCard:"extends/pearCard",
 			pearTab:"extends/pearTab",
 			pearMenu:"extends/pearMenu",
 			pearOper:"extends/pearOper",
@@ -64,8 +66,6 @@
 			echartsTheme:"extends/echartsTheme",
 			formSelects:'extends/formSelects-v4',
 			treetable:"extends/treetable",
-			iframeTools:"extends/iframeTools",
-			closeTools:"extends/closeTools",
 			"layui.all": "../layui.all"
 		};
 	o.prototype.cache = n, o.prototype.define = function(e, t) {

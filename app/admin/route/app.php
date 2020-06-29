@@ -20,53 +20,63 @@ Route::group('/', function(){
     Route::get('verify/[:config]','login/verify');//获取验证码
 });
 
-//后台路由中间件
+// +----------------------------------------------
+// |                     后台路由                 |
+// +----------------------------------------------
 Route::group('/', function(){
-    Route::get('/','index/index');//首页
-    Route::get('/menu','index/menu');//菜单
-    Route::get('main','index/main');//控制台
-    Route::get('cache','index/cache');//清理缓存
-    Route::get('logout','login/logout');//退出登录
-    Route::post('uploads','index/upload');//通用上传
-})->middleware(['AdminAuth']);
+    Route::rule('login/index','login/index','GET|POST');//后台登录页面   
+    Route::get('login/verify','login/verify');//获取验证码
+    Route::post('login/logout','login/logout');//退出登录
+});
 
-
-//后台路由中间件
+// +----------------------------------------------
+// |                     后台中间                 |
+// +----------------------------------------------
 Route::group('/', function(){
-    // +----------------------------------------------------------------------
-    // | 管理员
-    // +----------------------------------------------------------------------
-    Route::get("admin/index",'admin/index');//管理列表
-    Route::post("admin/status",'admin/status');//禁用，启用 
-    Route::post("admin/del",'admin/del');//删除
-    Route::rule("admin/add",'admin/add');//新增
-    Route::rule("admin/edit/[:id]",'admin/edit');//修改
-    Route::rule("admin/role/[:id]",'admin/role');//角色
-    Route::rule("admin/permission/[:id]",'admin/permission');//直接权限
-    Route::get("admin/log",'admin/log');//管理日志
+    Route::get('/','index/index');//后台页面   
+    Route::get('menu','index/menu');//菜单   
+    Route::get('index/index','index/index');//后台页面 
+    Route::get('index/home','index/home');//欢迎页  
+    Route::rule('index/pass','index/pass','GET|POST');//修改密码
+    Route::post('index/cache','index/cache','POST');//清理缓存
+})->middleware("AdminCheck");
 
-    // +----------------------------------------------------------------------
-    // | 角色
-    // +----------------------------------------------------------------------
-    Route::get("role/index",'role/index');//角色列表
-    Route::post("role/del",'role/del');//删除
-    Route::rule("role/add",'role/add');//新增
-    Route::rule("role/edit/[:id]",'role/edit');//修改
-    Route::rule("role/permission/[:id]",'role/permission');//分配权限
+// +----------------------------------------------
+// |                     通用                     |
+// +----------------------------------------------
+Route::group('/', function(){
+    Route::post('api/update','api/update');//通用更新 
+    Route::post('api/remove','api/remove');//通用删除   
+    Route::post('api/removes','api/removes');//通用批量删除   
+    Route::post('api/upload','api/upload');//通用上传 
+})->middleware("AdminCheck");
 
-    // +----------------------------------------------------------------------
-    // | 权限
-    // +----------------------------------------------------------------------
-    Route::get("permission/index",'permission/index');//权限列表
-    Route::post("permission/del",'permission/del');//删除
-    Route::rule("permission/add",'permission/add');//新增
-    Route::rule("permission/edit/[:id]",'permission/edit');//编辑
-    
-    // +----------------------------------------------------------------------
-    // | 系统管理
-    // +----------------------------------------------------------------------
-    Route::rule('site/index','site/index','GET|POST');//列表
-    Route::get('site/upload','site/upload');//文件管理
-    Route::post("site/uploadDel",'site/uploadDel');//删除
-    Route::rule("site/uploadAdd",'site/uploadAdd');//新增
-})->middleware(['AdminAuth','AdminPermission']);
+// +----------------------------------------------
+// |                     系统                     |
+// +----------------------------------------------
+Route::group('/', function(){
+    // 管理员
+    Route::get('admin/index','admin/index');//列表
+    Route::rule('admin/add','admin/add','GET|POST');//添加 
+    Route::rule('admin/edit','admin/edit','GET|POST');//编辑 
+    Route::rule('admin/role','admin/role','GET|POST');//分配角色
+    Route::rule('admin/permission','admin/permission','GET|POST');//直接权限
+    Route::post('admin/del','admin/del');//删除
+    // 角色管理  
+    Route::get('role/index','role/index');//列表
+    Route::rule('role/add','role/add','GET|POST');//添加 
+    Route::rule('role/edit','role/edit','GET|POST');//编辑 
+    Route::rule('role/permission','role/permission','GET|POST');//分配权限 
+    Route::post('role/del','role/del');//删除
+    // 菜单权限 
+    Route::get('permission/index','permission/index');//列表
+    Route::rule('permission/add','permission/add','GET|POST');//添加 
+    Route::rule('permission/edit','permission/edit','GET|POST');//编辑 
+    Route::post('permission/del','permission/del');//删除
+    // 系统管理
+    Route::rule('config/log','config/log','GET|POST');//列表
+    Route::rule('config/index','config/index','GET|POST');//列表
+    Route::get('config/file','config/file');//文件管理
+    Route::post("config/fileDel",'config/fileDel');//删除
+    Route::get("config/fileAdd",'config/fileAdd');//添加 
+})->middleware(['AdminCheck','AdminPermission']);

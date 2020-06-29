@@ -37,6 +37,7 @@
                                         <input type="password" name="password" lay-verify="required"
                                                placeholder="密码" autocomplete="off" class="layui-input">
                                     </div>
+                                    {if get_config('login_captcha')}
                                     <div class="layui-form-item">
                                         <div class="layui-row">
                                             <div class="layui-col-xs7">
@@ -48,6 +49,10 @@
                                                 <img class="codeimg" id="codeimg"/>
                                             </div>
                                         </div>
+                                    </div>
+                                    {/if}
+                                    <div class="layui-form-item">
+                                        <input type="checkbox" name="remember" id="remember" title="30天内自动登录" lay-skin="primary" checked="" value="1"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><span>30天内自动登录</span><i class="layui-icon layui-icon-ok"></i></div>
                                     </div>
                                     <div class="layui-form-item">
                                         <button class="layui-btn layui-btn-fluid" lay-submit
@@ -65,44 +70,19 @@
             </div>
         </div>
     </div>
-    <script src="__ADMIN__/layui/layui.js"></script>
+    <script src="__ADMIN__/js/jquery.js"></script>
+    <script src="__ADMIN__/js/tool.js"></script>
+    <script src="__ADMIN__/layui/layui.all.js"></script>
     <script>
-        layui.extend({
-        }).use(['form', 'layer'], function (form, layer) {
-            var $ = layui.jquery,
-                layer = layui.layer,
-                $view = $('#pear-login'),
-                type = 'login';
-                form.render();
-                initCode();
-    
-            //提交登录表单
-            form.on('submit(login-submit)', function (data) {
-                var loading = $(this).find('.layui-icon');
-                if (loading.is(":visible")) return;
-                loading.show();
-                $.post('/login', data.field, function (r) {
-                    if (r.code === 1) {
-                        location.href = '/';
-                    } else {
-                        layer.msg(r.msg);
-                        loading.hide();
-                        initCode();
-                    }
-                });
-                return false;
-            });
-            function initCode() {
-                $view.find('#codeimg').attr("src","/verify?data=" + new Date().getTime());
-            }
-    
-            $view.find('#codeimg').on('click', function () {
-                initCode();
-            });
-            {if (session('success'))}
-                layer.msg("{:session('success')}",{ icon:1 });
-            {/if}
-        });
+        var layer = layui.layer,
+        laydate = layui.laydate,
+        laypage = layui.laypage,
+        laytpl = layui.laytpl,
+        laytable = layui.table,
+        layform = layui.form,
+        layelem = layui.element,
+        layedit = layui.layedit;
     </script>
+    <script src="__ADMIN__/module/login/index.js"></script>
     </body>
     </html>

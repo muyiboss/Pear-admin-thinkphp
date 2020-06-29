@@ -3,84 +3,94 @@ declare (strict_types = 1);
 
 namespace app\admin\model;
 
-use think\facade\Session;
-use think\facade\Request;
 use think\Model;
-
+use think\facade\Session;
+use think\facade\Cookie;
+/**
+ * @mixin \think\Model
+ */
 class Admin extends Model
 {
-    protected $table = 'admin';
+    protected $table = 'admin_admin';
+    // 定义时间戳字段名
+    protected $createTime = 'create_at';
+    protected $updateTime = 'update_at';
 
     /**
      * 用户登录验证
-     * @param string $adminname
+     * @param string $username
      * @param string $password
+     * @param bool $remember
      */
-    public function login($adminname = '', $password = '')
+    public function login($username = '', $password = '', $remember = '')
     {
-        $adminname = trim($adminname);
-        $password = trim($password);
+        $data = [
+           'username' => trim($username),
+           'password' => set_password(trim($password)),
+           'status' => 1
+        ];
         //验证用户
-        $admin = self::where('username', $adminname)->where('status', 1)->find();
-        if ($admin == null) {
-            $this->log(['username' => $adminname, 'remark' => '用户不存在，或被禁用']);
-            return false;
-        };
-        // 密码校验
-        if ($admin->password != md5(md5($password) . $admin->salt)) {
-            $this->log(['username' => $adminname, 'remark' => '密码错误']);
-            return false;
-        };
-        //写入登录日志
-        $this->log(['username' => $adminname, 'remark' => '登录成功']);
+        $admin = self::where($data)->find();
+        if (!$admin) return false;
+        if ($remember==1) Cookie::set('token', simple_encrypt($admin->id . '@@@' . $admin->password), 30 * 86400);
         // 缓存登录信息
         $data = [
             'id' => $admin->id,
             'username' => $admin->username,
             'nickname' => $admin->nickname,
         ];
-        Session::set('key', $data);
+        Session::set('admin', $data);
         Session::set('sign', $this->dataSign($data));
         //缓存权限
         $permissions = $this->permissions($admin->id);
-        Session::set('permission', $permissions);
+        Session::set('key', $permissions);
+        // 触发登录成功事件
+        event('AdminLogin');
         return true;
     }
-
-    /**
-     * 写入登录日志
-     * @param $data
-     * @return bool
-     */
-    public function log($data)
-    {
-        $data['ip'] = Request::ip();
-        $data['user_agent'] = Request::header('User-Agent');
-        AdminLog::create($data);
-    }
-
+    
     /**
      * 判断是否登录
      * @return bool|array
      */
     public function isLogin()
     {
-        $admin = Session::get('key');
+        $admin = Session::get('admin');
+        $token = Cookie::get('token');
+        if (!$admin && !$token) return false;
+        $isToken = explode('@@@', simple_decrypt($token?$token:'-'));
+        if (!$admin) {
+            $info = self::field(true)->where(['id'=>$isToken[0],'status'=>1])->find();
+            if(!$info) return false;
+            // 缓存登录信息
+            $data = [
+                'id' => $info->id,
+                'username' => $info->username,
+                'nickname' => $info->nickname,
+            ];
+            Session::set('admin', $data);
+            Session::set('sign', $this->dataSign($data));
+            //缓存权限
+            $permissions = $this->permissions($info->id);
+            Session::set('key', $permissions);
+            return true;
+         }
         if (isset($admin['id'])) {
             return Session::get('sign') == $this->dataSign($admin) ? true : false;
         }
         return false;
     }
 
-    /**
+     /**
      * 退出登陆
      * @return bool
      */
     public function logout()
     {
-        Session::delete('key');
+        Session::delete('admin');
         Session::delete('sign');
-        Session::delete('permission');
+        Session::delete('key');
+        Cookie::delete('token');
         return true;
     }
 
@@ -101,30 +111,23 @@ class Admin extends Model
     }
 
     /**
-     * 拥有的角色
-     * @return \think\model\relation\BelongsToMany
+     * 用户拥有的角色
      */
     public function roles()
     {
-        return $this->belongsToMany('Role', 'admin_role', 'role_id', 'admin_id');
+        return $this->belongsToMany('Role', 'admin_admin_role', 'role_id', 'admin_id');
     }
 
     /**
-     * 直接权限
-     * @return \think\model\relation\BelongsToMany
+     * 用户的直接权限
      */
     public function directPermissions()
     {
-        return $this->belongsToMany('Permission', 'admin_permission', 'permission_id', 'admin_id');
+        return $this->belongsToMany('Permission', 'admin_admin_permission', 'permission_id', 'admin_id');
     }
 
     /**
      * 用户的所有权限
-     * @param $id
-     * @return array
-     * @throws DbException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function permissions($id)
     {
@@ -178,5 +181,4 @@ class Admin extends Model
         //合并权限为用户的最终权限
         return $permissions;
     }
-
 }

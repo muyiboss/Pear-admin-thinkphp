@@ -6,19 +6,16 @@ namespace app\admin\model;
 use think\Model;
 
 /**
- * @mixin think\Model
+ * @mixin \think\Model
  */
 class Permission extends Model
 {
-    protected $table = 'permission';
-
+    protected $table = 'admin_permission';
     /**
      * 子权限
-     * @return \think\model\relation\HasMany
      */
-    public function children()
+    public function child()
     {
         return $this->hasMany('Permission','pid','id');
     }
-    
 }

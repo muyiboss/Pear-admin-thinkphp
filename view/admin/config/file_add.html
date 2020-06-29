@@ -1,0 +1,67 @@
+{extend name="/base"}
+{block name="css"}
+   <link rel="stylesheet" href="__ADMIN__/css/pearForm.css" />
+   <style>
+   body{margin: 10px;background-color: whitesmoke;}
+   </style>
+{/block}
+{block name="body"}
+<div class="layui-row layui-col-space15">
+<div class="layui-col-md12">
+    <div class="layui-card">
+        <div class="layui-tab-content">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>新增图片</legend>
+              </fieldset>
+              <form class="layui-form edit-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        新增图片
+                    </label>
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm upload-images" type="button">
+                            <i class="fa fa-images">
+                            </i>
+                            新增图片
+                        </button>
+                        <input lay-verify="uploadimg" name="img" type="hidden"/>
+                        <div class="upload-images">
+                            <span>
+                            </span>
+                            <img class="upload-images"  src=""/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>      
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script>
+    if ($('button.upload-images').length) {
+        $('button.upload-images').each(function() {
+            var _this = $(this);
+            _ajax_upload(_this, {
+                success: function(res) {
+                    if (res.code) {
+                        layer.msg(res.msg, {
+                            icon: 2
+                        });
+                    } else {
+                        layer.msg(res.msg, {
+                            icon: 1
+                        });
+                        _this.next().val(res.data.src).next().find('img.upload-images').attr('src', res.data.thumb);
+                        layer_iframe_close(333, true);
+                    }
+                }
+            });
+        });
+        $('div.upload-image span').click(function() {
+            $(this).next().attr('src', '').parent().prev().val('');
+        });
+    }
+</script>
+{/block}

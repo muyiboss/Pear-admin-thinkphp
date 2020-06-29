@@ -13,7 +13,7 @@ class Permission extends Validate
      *
      * @var array
      */	
-	protected $rule = [
+    protected $rule = [
 	    'title|名称' => 'require',
         'href|路由' => 'require',
         'type|类型' => 'require',

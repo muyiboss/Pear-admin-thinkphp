@@ -4,17 +4,17 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use think\facade\View;
-use think\facade\Session;
 use think\facade\Db;
-use app\common\model\UploadFile;
+use think\facade\Session;
 use app\admin\model\Admin;
 class Index extends Base
 {
-    public function index(){
+    public function index()
+    {
         return View::fetch();
     }
 
-    public function main(){
+    public function home(){
         return View::fetch('',[
             'os'=>PHP_OS,
             'space'=>round((disk_free_space('.')/(1024*1024)),2).'M',
@@ -30,46 +30,24 @@ class Index extends Base
     }
 
     public function menu(){
-        if(!Session::has('permission')){
-            Session::set('permission',(new Admin())->permissions(Session::get('key.id')));
-        }
-        return json(get_tree(Session::get('permission')));
+        return json(get_tree(Session::get('key')));
     }
 
-    public function upload()
+    public function pass()
     {
-        $file = $this->request->file();
-
-        try {
-            $type = get_site('file-type');
-            if($type==2){
-                //阿里云上传
-                validate(['image'=>'filesize:10240|fileExt:jpg|image:200,200,jpg'])
-                ->check($file);
-                $savename = [];
-                foreach($file as $k) {
-                    $res = alYunOSS($k, $k->extension());
-                    $up = new UploadFile();
-                    $up->add($k,$res['src'],2);
-                    if ($res["code"] == 1) $savename = $res['src'];
-                }
-            }else{
-                validate(['image'=>'filesize:10240|fileExt:jpg|image:200,200,jpg'])
-                ->check($file);
-                foreach($file as $k) {
-                    $savename = '/'. \think\facade\Filesystem::disk('public')->putFile( 'topic', $k);
-                    $up = new UploadFile();
-                    $up->add($k,$savename,1);
-                }
-            }
-            $this->returnApi('上传成功',1,$savename);
-        } catch (think\exception\ValidateException $e) {
-            $this->returnApi('上传失败',0,$e->getMessage());
+        if ($this->post){
+            Admin::where('id',Session::get('admin.id'))->update(['password' => set_password(trim($this->post['password']))]);
+            $this->returnApi('修改成功');
         }
+        return View::fetch();
     }
-    public function cache(){
-        delete_dir_file(root_path().'runtime/');
-        return redirect('/')->with('success','清理成功');
+
+    public function cache()
+    {        
+        $cache =  root_path().'runtime';
+        delete_dir($cache);
+        Session::clear();
+        $this->returnApi('清理成功');  
     }
-    
+
 }

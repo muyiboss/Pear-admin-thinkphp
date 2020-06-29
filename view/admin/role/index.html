@@ -1,99 +1,24 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<link href="__ADMIN__/layui/css/layui.css" rel="stylesheet" />
-		<link href="__ADMIN__/css/pearCommon.css" rel="stylesheet" />
-	</head>
-	<body class="pear-container">
-		<div class="layui-card">
-			<div class="layui-card-body">
-				<table id="dataTable" lay-filter="dataTable"></table>
-			</div>
+{extend name="/base"}
+{block name="body"}
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<table id="dataTable" lay-filter="dataTable"></table>
 		</div>
+	</div>
 
-		<script type="text/html" id="lay-toolbar">
-			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add"> 
-				<i class="layui-icon layui-icon-add-1"></i> 
-				新增 
-			</button>
-		</script>
-		
-		<script type="text/html" id="options">
-			<a class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">编辑</a>
-			<a class="pear-btn pear-btn-primary pear-btn-sm" lay-event="permission">权限</a>
-			<a class="pear-btn pear-btn-danger pear-btn-sm" lay-event="del">删除</a>
-		</script>
-		
-		<script src="__ADMIN__/layui/layui.js"></script>
-		<script>
-		   layui.use(['jquery', 'table', 'element', 'form', 'layer','iframeTools'], function () {
-			var table = layui.table;
-			var $ = layui.jquery;
-			var element = layui.element;
-			var form = layui.form;
-			var layer = layui.layer;
-			var iframeTools = layui.iframeTools;
-
-			//表格初始化
-			var dataTable = table.render({
-				elem: '#dataTable'
-				, url: "index" //数据接口
-				, where: {model: "admin"}
-				, page: true //开启分页
-				, skin: 'line'
-				, toolbar: '#lay-toolbar'
-				, cols: [[ //表头
-					{field: 'id', title: 'ID', sort: true, width: 80}
-					, {field: 'name', title: '名称'}
-					, {field: 'desc', title: '描述'}
-					, {field: 'create_time', title: '创建时间'}
-					, {fixed: 'right', title: '操作', width: 320, align: 'center', toolbar: '#options'}
-				]]
-				, defaultToolbar: [{
-						layEvent: 'refresh',
-						icon: 'layui-icon-refresh',
-					}, 'filter', 'print', 'exports']
-			});
-			//监听工具条
-			table.on('tool(dataTable)', function (obj) { //注：tool是工具条事件名，dataTable是table原始容器的属性 lay-filter="对应的值"
-				var data = obj.data //获得当前行数据
-					, layEvent = obj.event; //获得 lay-event 对应的值
-				if (layEvent === 'del') {
-					layer.confirm('确认删除吗？', function (index) {
-						layer.close(index);
-						var load = layer.load();
-						$.post("del", {id: [data.id]}, function (res) {
-							layer.close(load);
-							if (res.code == 1) {
-								layer.msg(res.msg, {icon: 1, time: 1500}, function () {
-									obj.del();
-								})
-							} else {
-								layer.msg(res.msg, {icon: 2, time: 1500})
-							}
-						});
-					});
-				} else if (layEvent === 'edit') {
-					iframeTools.layer_iframe('修改', 'edit/' + data.id,);
-				} else if (layEvent === 'permission') {
-					iframeTools.layer_iframe('权限', 'permission/' + data.id,);
-				}
-			});
-			table.on('toolbar(dataTable)', function(obj){
-						if(obj.event === 'add'){
-							iframeTools.layer_iframe('新增', 'add');
-						} else if(obj.event === 'refresh'){
-							refresh();
-						} else if(obj.event === 'batchRemove'){
-							batchRemove(obj);
-						}
-			});
-			refresh = function(param){
-				table.reload('dataTable');
-			}
-		})
-		</script>
-	</body>
-</html>
+	<script type="text/html" id="lay-toolbar">
+		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add"> 
+			<i class="layui-icon layui-icon-add-1"></i> 
+			新增 
+		</button>
+	</script>
+	
+	<script type="text/html" id="options">
+		<a class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">编辑</a>
+		<a class="pear-btn pear-btn-primary pear-btn-sm" lay-event="permission">权限</a>
+		<a class="pear-btn pear-btn-danger pear-btn-sm" lay-event="del">删除</a>
+	</script>
+	{/block}
+	{block name="js"}
+	<script src="__ADMIN__/module/role/index.js"></script>
+	{/block}

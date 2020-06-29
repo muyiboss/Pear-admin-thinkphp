@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="__ADMIN__/css/pearCommon.css" rel="stylesheet" />
+        <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+		<link href="__ADMIN__/css/assets/console1.css" rel="stylesheet" />
+        {block name="css"}
+        {/block}
+        <style>
+            .layui-form>.mainBox{background-color: white;}
+       </style>
+    </head>
+    <body class="pear-container">
+        {block name="body"}
+        {/block}
+        <script src="__ADMIN__/js/jquery.js"></script>
+        <script src="__ADMIN__/js/tool.js"></script>
+        <script src="__ADMIN__/layui/layui.all.js"></script>
+        <script>
+            var layer = layui.layer,
+            laydate = layui.laydate,
+            laypage = layui.laypage,
+            laytpl = layui.laytpl,
+            laytable = layui.table,
+            layform = layui.form,
+            layelem = layui.element,
+            layedit = layui.layedit;
+        </script>
+        <script>
+          $(function() {
+            layedit.set({
+                uploadImage: {
+                    url: '/api/upload'
+                }
+            });
+            //建立编辑器
+            var lb = layedit.build('content', {
+            height: 400 //设置编辑器的高度
+            });
+            layelem.render();
+            $(document).click(function() {
+                    if (self !== top && top.tab_tool_hide) {
+                        top.tab_tool_hide();
+                    }
+                });
+            $('.layui-layout-body').on('click', 'img.show-image', function() {
+                    show_big_image($(this).attr('src'));
+                });
+                $('.layui-form').on('click', 'button.layui-btn-cancel', function() {
+                    layer_iframe_close();
+                });
+                if ($('button.upload-image').length) {
+                    $('button.upload-image').each(function() {
+                        var _this = $(this);
+                        _ajax_upload(_this, {
+                            success: function(res) {
+                                if (res.code) {
+                                    layer.msg(res.msg, {
+                                        icon: 2
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {
+                                        icon: 1
+                                    });
+                                    _this.next().val(res.data.src).next().find('img.upload-image').attr('src', res.data.thumb);
+                                }
+                            }
+                        });
+                    });
+                    $('div.upload-image span').click(function() {
+                        $(this).next().attr('src', '').parent().prev().val('');
+                    });
+                }
+                if ($('.layui-form').length) {
+                    $('.layui-form select option').each(function() {
+                        $(this).html($(this).html().trim());
+                    });
+                    layform.render();
+                    if ($('.layui-form.edit-form').length) {
+                        layform.verify({
+                            uploadimg: function(value, item) {
+                                if (value === '') {
+                                    return '请选择图片';
+                                }
+                            }
+                        });
+                    layform.on('submit(apiform)', function(data) {
+                        _ajax({
+                            data: data.field,
+                            success: function(res) {
+                                if (res.code!=1) {
+                                    layer.msg(res.msg, {
+                                        icon: 2
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {
+                                        icon: 1
+                                    });
+                                    layer_iframe_close(333, true);
+                                }
+                            },
+                            error: function() {
+                                layer.msg('系统繁忙,请稍后重试', {
+                                    icon: 0
+                                });
+                            }
+                        });
+                        return false;
+                    });
+                }
+                }
+            });
+        </script>
+        {block name="js"}
+        {/block}
+</body>
+</html>
+

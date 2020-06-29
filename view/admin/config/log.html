@@ -1,0 +1,31 @@
+{extend name="/base"}
+{block name="body"}
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label">管理ID</label>
+						<div class="layui-input-inline">
+							<input type="text" name="uid" placeholder="" class="layui-input">
+						</div>
+						<button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+							<i class="layui-icon layui-icon-search"></i>
+							查询
+						</button>
+						<button type="reset" class="pear-btn pear-btn-md">
+							<i class="layui-icon layui-icon-refresh"></i>
+							重置
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="dataTable" lay-filter="dataTable"></table>
+			</div>
+		</div>
+	{/block}
+	{block name="js"}
+	<script src="__ADMIN__/module/config/log.js"></script>
+	{/block}
