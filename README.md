@@ -1,10 +1,10 @@
 #### 简介
 
 >后端基于thinkphp6.0.3，前端后台Pear Admin Layui。开发的后台管理系统
-####2020/6/29 重大重塑  进一步优化系统逻辑
-####2020/6/30 代码生成
-####演示地址http://demo.jianla.cn/ 
-####账号admin 密码123456
+* 2020/6/29 重大重塑  进一步优化系统逻辑
+* 2020/6/30 代码生成
+* 演示地址http://demo.jianla.cn/ 
+* 账号admin 密码123456
 
 #### 安装
 
@@ -35,7 +35,8 @@
 * 文件管理    完成
 * 代码生成    完成
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0626/192920_2a718f1e_1302383.png "11.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/150848_37a1c977_1302383.png "1.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0630/150858_59ae5c62_1302383.png "2.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0625/213756_27cbdd83_1302383.png "2.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0625/213802_e118467d_1302383.png "3.png")
 
