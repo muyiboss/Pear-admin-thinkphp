@@ -13,6 +13,39 @@
         {/block}
         <style>
             .layui-form>.mainBox{background-color: white;}
+            button.upload-image {
+                margin: 4px 5px;
+                vertical-align: top
+            }
+
+            div.upload-image {
+                display: inline-block;
+                position: relative;
+                overflow: hidden
+            }
+
+            div.upload-image span {
+                background-image: url(__ADMIN__/images/x.png);
+                position: absolute;
+                right: 0;
+                height: 16px;
+                width: 16px;
+                cursor: pointer
+            }
+
+            img.upload-image {
+                max-width: 380px;
+                max-height: 50px
+            }
+
+            img.show-image {
+                max-height: 25px
+            }
+
+            img.show-big-image {
+                width: 100%;
+                height: 100%
+            }
        </style>
     </head>
     <body class="pear-container">
@@ -90,6 +123,7 @@
                             }
                         });
                     layform.on('submit(apiform)', function(data) {
+                        data.field.content=layedit.getContent(lb);
                         _ajax({
                             data: data.field,
                             success: function(res) {

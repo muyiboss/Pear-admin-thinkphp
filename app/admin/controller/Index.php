@@ -30,7 +30,34 @@ class Index extends Base
     }
 
     public function menu(){
-        return json(get_tree(Session::get('key')));
+        $debug =  env('APP_DEBUG');
+        $menu = get_tree(Session::get('key'));
+        if($debug==true){
+            $menu[] = [
+            "id" => -1,
+            "pid" => 0,
+            "title" => "开发管理",
+            "icon" => "layui-icon layui-icon-util",
+            "type" => 0,
+            "children" => [
+                    "0" =>[
+                        "id" => -2,
+                        "pid" => -1,
+                        "title" => "多级控制",
+                        "href" => "/multi/index",
+                        "type" => 1,
+                    ],
+                    "1" => [
+                        "id" => -3,
+                        "pid" => -1,
+                        "title" => "代码生成",
+                        "href" => "/gen/index",
+                        "type" => 1,
+                    ]
+                ],
+            ];
+        }
+        return json($menu);
     }
 
     public function pass()

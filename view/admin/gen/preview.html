@@ -1,0 +1,53 @@
+{extend name="/base"}
+{block name="body"}
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <h1>
+                                将生成下列文件,确定操作吗?
+                            </h1>
+                            <input name="multi" type="hidden" value="{$multi}"/>
+                            <input name="tn" type="hidden" value="{$tn}"/>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn layui-btn-sm" lay-filter="preview" lay-submit="">
+                                <i class="layui-icon">
+                                    
+                                </i>
+                                生成
+                            </button>
+                            <button class="layui-btn layui-btn-sm layui-back" type="button">
+                                <i class="layui-icon">
+                                    
+                                </i>
+                                取消
+                            </button>
+                        </div>
+                    </form>
+                    <div class="layui-collapse">
+                        {foreach $data as $v}
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">
+                                {$v[0]}
+                            </h2>
+                            <div class="layui-colla-content">
+                                <pre>{:htmlentities($v[1])}</pre>
+                            </div>
+                        </div>
+                        {/foreach}
+                    </div>
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script src="__ADMIN__/module/admin/gen/preview.js"></script>
+{/block}

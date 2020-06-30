@@ -9,7 +9,8 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
-
+// 加载多级路由
+include app_path().'/route/multi.php';
 Route::miss(function() {
     return '404';
 });
@@ -79,4 +80,12 @@ Route::group('/', function(){
     Route::get('config/file','config/file');//文件管理
     Route::post("config/fileDel",'config/fileDel');//删除
     Route::get("config/fileAdd",'config/fileAdd');//添加 
+    // 多级控制
+    Route::get('multi/index','multi/index');//列表
+    Route::rule('multi/add','multi/add','GET|POST');//添加 
+    Route::rule('multi/edit','multi/edit','GET|POST');//编辑 
+    Route::post('multi/del','multi/del');//删除
+    // 代码生成
+    Route::rule('gen/index','gen/index','GET|POST');//列表
+    Route::rule('gen/preview','gen/preview','GET|POST');//预览
 })->middleware(['AdminCheck','AdminPermission']);

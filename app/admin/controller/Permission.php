@@ -16,10 +16,20 @@ class Permission extends Base
     public function index()
     {
         if ($this->isAjax) {
+            $where = [];
+            //按多级              
+            if ($mid = input('get.multi')) {
+                $where[] = ['mid', '=', $mid];
+            }
             $list = PermissionModel::order('id','desc')->order('sort','desc')->select();
+            foreach ($list as $k => $v) {
+                $list[$k]['multi']    = get_field('admin_multi', $v['mid'], 'url', 'admin');
+            }
             $this->returnApi('', 0, $list->toArray(),['count' => $list->count()]);
         }
-        return View::fetch();
+        return View::fetch('',[
+            'multi' => Multi::order(['url'])->column('url', 'id'),
+        ]);
     }
 
     /**
@@ -39,7 +49,8 @@ class Permission extends Base
             $this->returnApi('添加成功');
         }
         return View::fetch('', [
-            'permissions' => get_tree(PermissionModel::order('sort','asc')->select()->toArray())
+            'permissions' => get_tree(PermissionModel::order('sort','asc')->select()->toArray()),
+            'multi' => ['' => '所属多级'] + Multi::order(['url'])->column('url', 'id'),
         ]);
     }
 
@@ -62,7 +73,8 @@ class Permission extends Base
         }
         return View::fetch('',[
             'model' => $permission,
-            'permissions' => get_tree(PermissionModel::order('sort','asc')->select()->toArray())
+            'permissions' => get_tree(PermissionModel::order('sort','asc')->select()->toArray()),
+            'multi' =>  Multi::order(['url'])->column('url', 'id'),
         ]);
     }
 

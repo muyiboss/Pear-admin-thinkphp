@@ -240,3 +240,70 @@ if (!function_exists('get_field')) {
         return $row === null ? $default : $row[$field];
     }
 }
+
+if (!function_exists('hump_underline')) {
+    /**
+     * 驼峰转下划线
+     * @param  string $str 需要转换的字符串
+     * @return string      转换完毕的字符串
+     */
+    function hump_underline($str)
+    {
+        return strtolower(trim(preg_replace('/[A-Z]/', '_\\0', $str), '_'));
+    }
+}
+
+if (!function_exists('hump_underline')) {
+    /**
+     * 驼峰转下划线
+     * @param  string $str 需要转换的字符串
+     * @return string      转换完毕的字符串
+     */
+    function hump_underline($str)
+    {
+        return strtolower(trim(preg_replace('/[A-Z]/', '_\\0', $str), '_'));
+    }
+}
+
+if (!function_exists('underline_hump')) {
+    /**
+     * 下划线转驼峰
+     * @param  string $str 需要转换的字符串
+     * @return string      转换完毕的字符串
+     */
+    function underline_hump($str)
+    {
+        return ucfirst(
+            preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+                return strtoupper($match[1]);
+            }, $str)
+        );
+    }
+}
+
+if (!function_exists('deep_in_array')) {
+    /**
+     * 多维数组查询值是否存在
+     * @param  string         $value  需要查询的值
+     * @param  array          $array  需要查询的数组
+     * @return string|boolean         查询到返回包含值的数组,查询不到返回false
+     */
+    function deep_in_array($value, $array)
+    {
+        foreach ($array as $v) {
+            if (!is_array($v)) {
+                if ($v == $value) {
+                    return $v;
+                }
+                continue;
+            }
+            if (in_array($value, $v)) {
+                return $v;
+            } else {
+                deep_in_array($value, $v);
+            }
+
+        }
+        return false;
+    }
+}

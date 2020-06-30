@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-06-30 01:20:18
+-- 生成日期： 2020-06-30 15:06:45
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.4
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `www.2.com`
+-- 数据库： `www.3.com`
 --
 
 -- --------------------------------------------------------
@@ -44,7 +44,8 @@ CREATE TABLE `admin_admin` (
 
 INSERT INTO `admin_admin` (`id`, `username`, `nickname`, `password`, `status`, `create_at`, `update_at`) VALUES
 (1, 'admin', 'oks', 'cb962ac59075b964b07152d234', 1, NULL, '2020-03-31 09:19:06'),
-(6, '3', '12312', 'bc87e4b5ce2fe28308fd9f2a7b', 1, '2020-06-29 15:23:37', '2020-06-29 15:23:37');
+(6, '3', '12312', 'bc87e4b5ce2fe28308fd9f2a7b', 1, '2020-06-29 15:23:37', '2020-06-29 15:23:37'),
+(7, '123', '231', 'abeea535938c496a261b3b39c0', 1, '2020-06-30 06:37:45', '2020-06-30 06:37:45');
 
 -- --------------------------------------------------------
 
@@ -103,11 +104,33 @@ CREATE TABLE `admin_log` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `admin_multi`
+--
+
+CREATE TABLE `admin_multi` (
+  `id` int(11) NOT NULL,
+  `url` char(50) NOT NULL COMMENT '地址',
+  `prefix` char(50) NOT NULL COMMENT '库表前缀',
+  `name` char(50) NOT NULL COMMENT '多级名称'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='多级控制';
+
+--
+-- 转存表中的数据 `admin_multi`
+--
+
+INSERT INTO `admin_multi` (`id`, `url`, `prefix`, `name`) VALUES
+(1, 'admin', 'admin_', '后台管理'),
+(10, 'home', 'home_', '前台管理');
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `admin_permission`
 --
 
 CREATE TABLE `admin_permission` (
   `id` int(10) UNSIGNED NOT NULL,
+  `mid` int(11) NOT NULL COMMENT '多级ID',
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',
   `title` char(50) DEFAULT NULL COMMENT '名称',
   `href` char(50) NOT NULL COMMENT '地址',
@@ -120,16 +143,18 @@ CREATE TABLE `admin_permission` (
 -- 转存表中的数据 `admin_permission`
 --
 
-INSERT INTO `admin_permission` (`id`, `pid`, `title`, `href`, `icon`, `sort`, `type`) VALUES
-(1, 0, '首页', '/index/home', 'layui-icon layui-icon-home', 1, 1),
-(2, 0, '后台权限', '', 'layui-icon layui-icon-username', 1, 0),
-(3, 2, '管理员', '/admin/index', '', 1, 1),
-(4, 2, '角色管理', '/role/index', '', 99, 1),
-(5, 2, '菜单权限', '/permission/index', '', 99, 1),
-(6, 0, '系统管理', '', 'layui-icon layui-icon-set', 3, 0),
-(7, 6, '后台日志', '/config/log', '', 2, 1),
-(8, 6, '系统设置', '/config/index', '', 1, 1),
-(9, 6, '文件管理', '/config/file', '', 2, 1);
+INSERT INTO `admin_permission` (`id`, `mid`, `pid`, `title`, `href`, `icon`, `sort`, `type`) VALUES
+(1, 0, 0, '首页', '/index/home', 'layui-icon layui-icon-home', 1, 1),
+(2, 0, 0, '后台权限', '', 'layui-icon layui-icon-username', 1, 0),
+(3, 0, 2, '管理员', '/admin/index', '', 1, 1),
+(4, 0, 2, '角色管理', '/role/index', '', 99, 1),
+(5, 0, 2, '菜单权限', '/permission/index', '', 99, 1),
+(6, 0, 0, '系统管理', '', 'layui-icon layui-icon-set', 3, 0),
+(7, 0, 6, '后台日志', '/config/log', '', 2, 1),
+(8, 0, 6, '系统设置', '/config/index', '', 1, 1),
+(9, 0, 6, '文件管理', '/config/file', '', 2, 1),
+(16, 10, 0, 'CMS管理', '/', 'layui-icon layui-icon-release', 2, 0),
+(17, 10, 16, '新闻管理', '/home/news/index', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -170,6 +195,22 @@ CREATE TABLE `admin_role_permission` (
 
 INSERT INTO `admin_role_permission` (`id`, `permission_id`, `role_id`) VALUES
 (11, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `home_news`
+--
+
+CREATE TABLE `home_news` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `desc` varchar(255) DEFAULT NULL COMMENT '描述',
+  `content` text COMMENT '内容',
+  `img` varchar(233) NOT NULL COMMENT '缩略图',
+  `create_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='新闻';
 
 -- --------------------------------------------------------
 
@@ -245,6 +286,12 @@ ALTER TABLE `admin_log`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 表的索引 `admin_multi`
+--
+ALTER TABLE `admin_multi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `admin_permission`
 --
 ALTER TABLE `admin_permission`
@@ -261,6 +308,12 @@ ALTER TABLE `admin_role`
 -- 表的索引 `admin_role_permission`
 --
 ALTER TABLE `admin_role_permission`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `home_news`
+--
+ALTER TABLE `home_news`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -283,7 +336,7 @@ ALTER TABLE `system_file`
 -- 使用表AUTO_INCREMENT `admin_admin`
 --
 ALTER TABLE `admin_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- 使用表AUTO_INCREMENT `admin_admin_permission`
@@ -304,10 +357,16 @@ ALTER TABLE `admin_log`
   MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用表AUTO_INCREMENT `admin_multi`
+--
+ALTER TABLE `admin_multi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- 使用表AUTO_INCREMENT `admin_permission`
 --
 ALTER TABLE `admin_permission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- 使用表AUTO_INCREMENT `admin_role`
@@ -322,6 +381,12 @@ ALTER TABLE `admin_role_permission`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=12;
 
 --
+-- 使用表AUTO_INCREMENT `home_news`
+--
+ALTER TABLE `home_news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- 使用表AUTO_INCREMENT `system_config`
 --
 ALTER TABLE `system_config`
@@ -331,7 +396,7 @@ ALTER TABLE `system_config`
 -- 使用表AUTO_INCREMENT `system_file`
 --
 ALTER TABLE `system_file`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

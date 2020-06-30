@@ -18,6 +18,7 @@ layui.use(['table','treetable'],function () {
             cols: [
                 [
                 {field: 'title', minWidth: 200, title: '权限名称'},
+                {field: 'multi', title: '所属多级',unresize: true, align: 'center'},
                 {field: 'icon',title: '图标', unresize: true, align: 'center',
                     templet:function (d) {
                         return '<i class=" '+d.icon+'"></i>';

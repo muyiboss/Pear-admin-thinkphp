@@ -17,7 +17,7 @@
    </style>
 {/block}
 {block name="body"}
-    <form class="layui-form" action="" lay-filter="component-form-element">
+    <form class="layui-form  edit-form" action="" lay-filter="component-form-element">
         <div class="layui-form-item">
             <label for="" class="layui-form-label">父级</label>
             <div class="layui-input-block">
@@ -30,6 +30,26 @@
                                 <option value="{$p2.id}" {if isset($model) && $model->pid==$p2['id']} selected {/if} >&nbsp;&nbsp;&nbsp;┗━━{$p2.title}</option>
                             {/foreach}
                         {/if}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                所属多级
+            </label>
+            <div class="layui-input-block">
+                <select lay-verify="required" name="mid">
+                    {foreach $multi as $k=>$v}
+                    {if $k == $model['mid']}
+                    <option selected="selected" value="{$k}">
+                        {$v}
+                    </option>
+                    {else}
+                    <option value="{$k}">
+                        {$v}
+                    </option>
+                    {/if}
                     {/foreach}
                 </select>
             </div>

@@ -1,0 +1,62 @@
+{extend name="/base"}
+{block name="css"}
+   <link rel="stylesheet" href="__ADMIN__/css/pearForm.css" />
+   <style>
+   body{margin: 10px;background-color: whitesmoke;}
+   </style>
+{/block}
+{block name="body"}
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <form class="layui-form edit-form"  action="preview" method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                多级控制
+                            </label>
+                            <div class="layui-input-block">
+                                <select lay-filter="multi" lay-search="" name="multi">
+                                    {foreach $multi as $k}
+                                    <option value="{$k}">
+                                        {$k}
+                                    </option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                表名
+                            </label>
+                            <div class="layui-input-block">
+                                <select lay-search="" lay-verify="required" name="tn">
+                                    <option value="">
+                                        选择一个表
+                                    </option>
+                                    {foreach $tables as $table}
+                                    <option value="{$table}">
+                                        {$table}
+                                    </option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="genform">预览</button>
+                            </div>
+                        </div>
+                     </form>
+                </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script src="__ADMIN__/module/admin/gen/index.js"></script>
+{/block}

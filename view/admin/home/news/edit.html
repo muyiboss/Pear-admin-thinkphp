@@ -1,0 +1,65 @@
+{extend name="/base"}
+{block name="body"}
+    <form class="layui-form  edit-form" action="" >
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="main-container">
+                
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            标题
+        </label>
+        <div class="layui-input-block">
+            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" type="text" value="{$data['title']}"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            描述
+        </label>
+        <div class="layui-input-block">
+            <input autocomplete="off" class="layui-input" name="desc" type="text" value="{$data['desc']}"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            内容
+        </label>
+        <div class="layui-input-block">
+            <textarea id="content" name="content" type="text/plain" style="width:100%;margin-bottom:20px;"/>{$data['content']}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            缩略图
+        </label>
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm upload-image" type="button">
+                            <i class="fa fa-image">
+                            </i>
+                            缩略图
+                        </button>
+                        <input lay-verify="uploadimg" name="img" type="hidden" value="{$data['img']}"/>
+                        <div class="upload-image">
+                            <span>
+                            </span>
+                            <img class="upload-image" src="{$data['img']}"/>
+                        </div>
+        </div>
+    </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="apiform">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+    {/block}
